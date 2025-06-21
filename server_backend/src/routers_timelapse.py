@@ -21,8 +21,13 @@ async def create_job(start: str, end: str, fps: int = 24, duration: int | None =
         after = await session.scalar(
             select(Image.id).where(Image.taken_at >= end).limit(1)
         )
-    if not (before and after):
-        raise HTTPException(status_code=400, detail="requested range outside available images")
+    if not before or not after:
+        missing = []
+        if not before:
+            missing.append("start")
+        if not after:
+            missing.append("end")
+        raise HTTPException(status_code=400, detail=f"{', '.join(missing)} outside available images")
 
     task = generate_timelapse.delay(start, end, fps, duration)
     return {"job_id": task.id}
