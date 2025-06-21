@@ -7,8 +7,8 @@ router = APIRouter()
 @router.post("/api/timelapse")
 async def create_job(start: str, end: str, fps: int = 24, duration: int | None = 5):
     try:
-        datetime.fromisoformat(start)
-        datetime.fromisoformat(end)
+        s_dt = datetime.fromisoformat(start)
+        e_dt = datetime.fromisoformat(end)
     except ValueError:
         raise HTTPException(status_code=400, detail="bad datetime format")
     from sqlalchemy import select
@@ -16,10 +16,10 @@ async def create_job(start: str, end: str, fps: int = 24, duration: int | None =
 
     async with async_session() as session:
         before = await session.scalar(
-            select(Image.id).where(Image.taken_at <= start).limit(1)
+            select(Image.id).where(Image.taken_at <= s_dt).limit(1)
         )
         after = await session.scalar(
-            select(Image.id).where(Image.taken_at >= end).limit(1)
+            select(Image.id).where(Image.taken_at >= e_dt).limit(1)
         )
     if not before or not after:
         missing = []
