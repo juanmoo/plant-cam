@@ -9,6 +9,9 @@ from config import settings
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
+
+DEFAULT_HOST = "0.0.0.0"
+DEFAULT_PORT = int(os.getenv("PORT", 8000))
 ROOT_DIR = Path(os.getenv("STORAGE_ROOT", "/data/plantcam"))
 STORAGE_ROOT = ROOT_DIR / "raw"
 
@@ -38,3 +41,8 @@ async def upload(device_id: str, taken_at: str, files: List[UploadFile] = File(.
             stored_paths.append(str(dest))
         await session.commit()
     return JSONResponse({"stored": stored_paths})
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host=DEFAULT_HOST, port=DEFAULT_PORT, reload=False)
