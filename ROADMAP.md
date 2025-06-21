@@ -20,6 +20,7 @@
 - [ ] Video caching & expiry policy
 - [ ] Disk space guard on server
 - [ ] Unit + integration tests CI
+- [ ] Dockerize backend (API + Celery)
 
 ## Phase 4 – Nice-to-Have Enhancements
 - [ ] Bulk image download zip
