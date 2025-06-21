@@ -33,6 +33,10 @@ async def on_startup():
     STATIC_DIR.mkdir(parents=True, exist_ok=True)
     app.mount("/videos", StaticFiles(directory=str(VIDEOS_DIR)), name="videos")
 
+@app.get("/videos")
+async def list_videos():
+    return [p.name for p in VIDEOS_DIR.glob("*.mp4")]
+
 @app.post("/api/upload")
 async def upload(
     device_id: str = Form(...),
