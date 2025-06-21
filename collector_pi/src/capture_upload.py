@@ -35,8 +35,9 @@ def upload_batch():
     files = sorted(BUFFER.glob("*.jpg"))[: cfg["upload"]["batch_size"]]
     if not files:
         return
-    taken_time = files[0].stem.split("_")[0]
-    taken_iso = datetime.strptime(taken_time, "%Y%m%d_%H%M%S").isoformat()
+    parts = files[0].stem.split("_")
+    taken_str = "_".join(parts[:2])  # YYYYMMDD_HHMMSS
+    taken_iso = datetime.strptime(taken_str, "%Y%m%d_%H%M%S").isoformat()
     multipart = [("files", open(fp, "rb")) for fp in files]
     data = {"device_id": DEVICE_ID, "taken_at": taken_iso}
     try:
