@@ -10,10 +10,10 @@
 - [x] Serve static index.html allowing manual download
 
 ## Phase 2 – Timelapse API & Simple UI
-- [ ] `/api/timelapse` async video job
-- [ ] Redis/Celery worker
-- [ ] Uniform frame sampling algorithm
-- [ ] Minimal web UI with range pickers & progress
+- [x] `/api/timelapse` async video job
+- [x] Redis/Celery worker
+- [x] Uniform frame sampling algorithm
+- [x] Minimal web UI with range pickers & progress
 
 ## Phase 3 – Production Hardening
 - [ ] Systemd service + log rotation on Pi
