@@ -27,16 +27,18 @@ async def _build_async(start: datetime, end: datetime, fps: int = 24, duration: 
 
     if duration:
         from datetime import timedelta
+        from bisect import bisect_left
         target_frames = fps * duration
         span = (end_utc - start_utc).total_seconds()
         step_sec = span / target_frames
         grid = [start_utc + timedelta(seconds=i*step_sec) for i in range(target_frames)]
-        frames=[]
-        idx=0
+        ts_list = [ts for _, ts in rows]
+        frames = []
         for t in grid:
-            while idx+1 < len(rows) and rows[idx+1][1] <= t:
-                idx+=1
-            frames.append(rows[idx][0])
+            i = bisect_left(ts_list, t)
+            if i == len(ts_list):
+                i -= 1  # cap to last index
+            frames.append(rows[i][0])
     else:
         frames=[p for p,_ in rows]
 
