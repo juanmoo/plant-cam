@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import asyncio, argparse, os
+import argparse, os
 from datetime import datetime
 from pathlib import Path
 import sys
@@ -18,5 +18,5 @@ now = datetime.now(timezone.utc)
 end_dt = datetime.fromisoformat(args.end) if args.end else now
 start_dt = datetime.fromisoformat(args.start) if args.start else end_dt - timedelta(hours=10)
 
-path = asyncio.run(build_timelapse(start_dt, end_dt, args.fps, args.duration))
+path = build_timelapse(start_dt, end_dt, args.fps, args.duration)
 print("Video saved to", path)
