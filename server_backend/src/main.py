@@ -28,7 +28,7 @@ async def upload(
     files: List[UploadFile] = File(...),
 ):
     try:
-        taken_dt = datetime.fromisoformat(taken_at)
+        taken_dt = datetime.fromisoformat(taken_at).astimezone(datetime.timezone.utc)
     except ValueError:
         raise HTTPException(status_code=400, detail="invalid taken_at format")
 

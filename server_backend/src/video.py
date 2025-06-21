@@ -19,7 +19,9 @@ async def _frame_paths(start: datetime, end: datetime) -> List[Path]:
     return [Path(p) for p in rows]
 
 async def build_timelapse(start: datetime, end: datetime, fps: int = 24, duration: int | None = None) -> Path:
-    frames = await _frame_paths(start, end)
+    start_utc = start.astimezone(datetime.timezone.utc)
+    end_utc = end.astimezone(datetime.timezone.utc)
+    frames = await _frame_paths(start_utc, end_utc)
     if not frames:
         raise ValueError("No frames in range")
 
