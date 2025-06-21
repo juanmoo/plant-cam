@@ -1,5 +1,6 @@
 from celery import Celery
-import os
+import os, sys, pathlib
+sys.path.append(str(pathlib.Path(__file__).parent))
 from datetime import datetime
 from video import build_timelapse
 
