@@ -1,5 +1,6 @@
 import os
-from pydantic import BaseSettings, Field
+from pydantic_settings import BaseSettings
+from pydantic import Field
 
 class Settings(BaseSettings):
     postgres_user: str = Field(..., env="POSTGRES_USER")
