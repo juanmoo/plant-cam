@@ -1,0 +1,13 @@
+[Unit]
+Description=PlantCam capture & upload service
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/plant-cam/collector_pi
+ExecStart=/usr/bin/python3 /home/pi/plant-cam/collector_pi/src/capture_upload.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
