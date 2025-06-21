@@ -13,5 +13,5 @@ celery_app = Celery(
 def generate_timelapse(start_iso: str, end_iso: str, fps: int, duration: int | None):
     start = datetime.fromisoformat(start_iso)
     end = datetime.fromisoformat(end_iso)
-    path = build_timelapse.run_sync(start, end, fps, duration)  # wrapper for async
+    path = build_timelapse(start, end, fps, duration)
     return str(path)
