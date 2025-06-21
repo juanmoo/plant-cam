@@ -7,19 +7,24 @@ from sqlalchemy import select
 from db import async_session, Image, Base, engine
 from config import settings
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
+app.mount("/", StaticFiles(directory=str(Path(__file__).parent.parent / "server_backend" / "static"), html=True), name="static")
 
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = int(os.getenv("PORT", 8000))
 ROOT_DIR = Path(os.getenv("STORAGE_ROOT", "/data/plantcam"))
 STORAGE_ROOT = ROOT_DIR / "raw"
+VIDEOS_DIR = ROOT_DIR / "videos"
 
 @app.on_event("startup")
 async def on_startup():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
+    VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
+    app.mount("/videos", StaticFiles(directory=str(VIDEOS_DIR)), name="videos")
 
 @app.post("/api/upload")
 async def upload(
