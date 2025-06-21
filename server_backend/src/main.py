@@ -6,13 +6,17 @@ from pathlib import Path
 from sqlalchemy import select
 from db import async_session, Image, Base, engine
 from config import settings
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR.parent / "static"
 app = FastAPI()
-app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
+app.mount("/static", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
+
+@app.get("/")
+async def index():
+    return FileResponse(STATIC_DIR / "index.html")
 
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = int(os.getenv("PORT", 8000))
