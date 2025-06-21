@@ -9,7 +9,8 @@ from config import settings
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
-STORAGE_ROOT = Path("/data/plantcam/raw")
+ROOT_DIR = Path(os.getenv("STORAGE_ROOT", "/data/plantcam"))
+STORAGE_ROOT = ROOT_DIR / "raw"
 
 @app.on_event("startup")
 async def on_startup():
