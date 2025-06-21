@@ -2,9 +2,37 @@
 <html>
 <head><meta charset="utf-8"><title>PlantCam Videos</title></head>
 <body>
-<h1>Available Timelapse Videos</h1>
+<h1>Create Timelapse</h1>
+<form id="tlform">
+  Start: <input type="datetime-local" id="start" required><br>
+  End: <input type="datetime-local" id="end" required><br>
+  FPS: <input type="number" id="fps" value="24" min="1"><br>
+  Duration (s): <input type="number" id="dur" value="5" min="1"><br>
+  <button type="submit">Generate</button>
+</form>
+<p id="status"></p>
+<hr>
+<h2>Available Timelapse Videos</h2>
 <ul id="list"></ul>
 <script>
+const form=document.getElementById('tlform');
+form.addEventListener('submit',e=>{
+  e.preventDefault();
+  const qs=`start=${start.value}&end=${end.value}&fps=${fps.value}&duration=${dur.value}`;
+  fetch('/api/timelapse?'+qs,{method:'POST'})
+  .then(r=>r.json()).then(d=>{
+     const id=d.job_id;
+     document.getElementById('status').textContent='Job '+id+' queued';
+     const iv=setInterval(()=>{
+       fetch('/api/timelapse/'+id).then(r=>r.json()).then(s=>{
+         if(s.status==='done'){
+           clearInterval(iv);
+           document.getElementById('status').innerHTML=`<a href="${s.video}" target="_blank">Download video</a>`;
+         }
+       });
+     },2000);
+  });
+});
 fetch('/videos')
  .then(r => r.json())
  .then(files => {
