@@ -9,6 +9,8 @@ async_session = async_sessionmaker(engine, expire_on_commit=False)
 class Base(DeclarativeBase):
     pass
 
+from datetime import datetime
+
 class Image(Base):
     __tablename__ = "images"
 
@@ -17,3 +19,10 @@ class Image(Base):
     path: Mapped[str]
     taken_at: Mapped[datetime]
     uploaded_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+
+class Video(Base):
+    __tablename__ = "videos"
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    path: Mapped[str]
+    params: Mapped[str]
+    created_at: Mapped[datetime] = mapped_column(default=datetime.utcnow)
