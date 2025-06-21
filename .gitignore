@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+.venv/
 
 # C extensions
 *.so
@@ -66,3 +67,8 @@ node_modules/
 *.jpg
 *.jpeg
 *.png
+
+
+# Plantcam
+collector_pi/.venv/
+collector_pi/config.yaml
