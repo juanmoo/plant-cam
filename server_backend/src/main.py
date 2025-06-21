@@ -9,8 +9,10 @@ from config import settings
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
+BASE_DIR = Path(__file__).parent
+STATIC_DIR = BASE_DIR.parent / "static"
 app = FastAPI()
-app.mount("/", StaticFiles(directory=str(Path(__file__).parent.parent / "server_backend" / "static"), html=True), name="static")
+app.mount("/", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
 
 DEFAULT_HOST = "0.0.0.0"
 DEFAULT_PORT = int(os.getenv("PORT", 8000))
@@ -24,6 +26,7 @@ async def on_startup():
         await conn.run_sync(Base.metadata.create_all)
     STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
     VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
+    STATIC_DIR.mkdir(parents=True, exist_ok=True)
     app.mount("/videos", StaticFiles(directory=str(VIDEOS_DIR)), name="videos")
 
 @app.post("/api/upload")
