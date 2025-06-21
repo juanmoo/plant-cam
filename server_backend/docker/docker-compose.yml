@@ -10,9 +10,9 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5433:5432" # host_port:container_port
+      - "${POSTGRES_PORT:-5433}:5432"
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "plantcam"]
+      test: ["CMD", "bash", "-c", "pg_isready -U $POSTGRES_USER"]
       interval: 10s
       timeout: 5s
       retries: 5
