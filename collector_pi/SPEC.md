@@ -4,7 +4,7 @@
 Capture plant images on a fixed schedule and upload them to the server within 60 min of capture.
 
 ## Hardware
-- Raspberry Pi 4 (2 GB+) with CSI/USB camera
+- Raspberry Pi 5 (2 GB+) with CSI/USB camera
 - 32 GB micro-SD (OS + local buffer)
 - Stable network (Wi-Fi or Ethernet)
 
