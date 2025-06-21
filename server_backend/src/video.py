@@ -18,7 +18,7 @@ async def _frames(start: datetime, end: datetime):
         )
     return [(Path(p), ts) for p, ts in rows.all()]
 
-async def build_timelapse(start: datetime, end: datetime, fps: int = 24, duration: int | None = None) -> Path:
+async def _build_async(start: datetime, end: datetime, fps: int = 24, duration: int | None = None) -> Path:
     start_utc = start.replace(tzinfo=timezone.utc)
     end_utc = end.replace(tzinfo=timezone.utc)
     rows = await _frames(start_utc, end_utc)
@@ -57,3 +57,8 @@ async def build_timelapse(start: datetime, end: datetime, fps: int = 24, duratio
         await session.commit()
 
     return out_path
+
+def build_timelapse(start, end, fps, duration):
+    """Sync wrapper for Celery"""
+    import asyncio
+    return asyncio.run(_build_async(start, end, fps, duration))
