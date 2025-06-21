@@ -3,11 +3,11 @@
 > Mark tasks with `[x]` when completed.
 
 ## Phase 1 – MVP
-- [ ] Pi capture every 10 min and HTTP upload
-- [ ] Backend endpoint `/api/upload` storing images
-- [ ] Basic DB schema & filesystem layout
-- [ ] Manual script to generate timelapse (CLI)
-- [ ] Serve static index.html allowing manual download
+- [x] Pi capture every 10 min and HTTP upload
+- [x] Backend endpoint `/api/upload` storing images
+- [x] Basic DB schema & filesystem layout
+- [x] Manual script to generate timelapse (CLI)
+- [x] Serve static index.html allowing manual download
 
 ## Phase 2 – Timelapse API & Simple UI
 - [ ] `/api/timelapse` async video job
