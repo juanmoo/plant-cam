@@ -62,7 +62,9 @@ async def _build_async(start: datetime, end: datetime, fps: int = 24, duration: 
 
 def build_timelapse(start, end, fps, duration):
     """Sync wrapper for Celery; reload db to bind engine to this loop"""
-    import asyncio, importlib, db as db_module
-    db_module = importlib.reload(db_module)
+    import asyncio, importlib, sys
+    if "db" in sys.modules:
+        del sys.modules["db"]
+    db_module = importlib.import_module("db")
     globals()["async_session"] = db_module.async_session
     return asyncio.run(_build_async(start, end, fps, duration))
