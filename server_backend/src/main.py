@@ -11,7 +11,10 @@ from fastapi.staticfiles import StaticFiles
 
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR.parent / "static"
+from routers_timelapse import router as tl_router
+
 app = FastAPI()
+app.include_router(tl_router)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR), html=True), name="static")
 
 @app.get("/")
