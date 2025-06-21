@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    container_name: plantcam-postgres
+    environment:
+      POSTGRES_USER: plantcam
+      POSTGRES_PASSWORD: plantcam_pw
+      POSTGRES_DB: plantcam_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5433:5432" # host_port:container_port
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "plantcam"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local
