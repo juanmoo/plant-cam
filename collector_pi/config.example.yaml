@@ -1,0 +1,13 @@
+capture:
+  interval_minutes: 10      # capture interval
+  resolution: [1280, 720]   # width, height
+  jpeg_quality: 90
+upload:
+  method: http
+  http_endpoint: "http://SERVER_IP:8000/api/upload"
+  batch_size: 20
+  retry_seconds: 300
+storage:
+  local_buffer: "/home/pi/plantcam_buffer"
+  max_disk_gb: 4
+id: RPI1234
