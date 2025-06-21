@@ -11,7 +11,7 @@ Capture plant images on a fixed schedule and upload them to the server within 60
 ## Software Stack
 - RPi OS Lite (64-bit)
 - Python 3.11
-- Required packages: `picamera2` (or `opencv-python` for USB), `requests`, `yaml`, `schedule`, `retry`, `watchdog`, `ujson`.
+- Required packages: `ffmpeg` via V4L2 (USB) or `picamera2` (CSI), `requests`, `yaml`, `schedule`, `retry`, `watchdog`, `ujson`.
 
 ## Directory Layout
 ```

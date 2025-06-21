@@ -19,14 +19,15 @@ def capture_image():
     ts = datetime.utcnow()
     rel = ts.strftime("%Y%m%d_%H%M%S") + f"_{DEVICE_ID}.jpg"
     out_path = BUFFER / rel
-    # simple capture using libcamera-still
+    # capture using ffmpeg from V4L2 webcam
     run([
-        "libcamera-still",
-        "-o",
-        str(out_path),
-        "-q",
-        str(cfg["capture"]["jpeg_quality"]),
-    ], check=True)
+        "ffmpeg",
+        "-f","v4l2",
+        "-video_size", f"{cfg['capture'].get('resolution',[1280,720])[0]}x{cfg['capture'].get('resolution',[1280,720])[1]}",
+        "-i","/dev/video0",
+        "-frames","1",
+        str(out_path)
+    ], check=True, stdout=open(os.devnull,'w'), stderr=open(os.devnull,'w'))
     return out_path, ts
 
 
