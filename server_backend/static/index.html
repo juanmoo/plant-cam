@@ -12,8 +12,8 @@
 </form>
 <p id="status"></p>
 <hr>
-<h2>Available Timelapse Videos</h2>
-<ul id="list"></ul>
+<h2>Last 10 Timelapse Videos</h2>
+<table border="1"><thead><tr><th>Created</th><th>Video</th></tr></thead><tbody id="list"></tbody></table>
 <script>
 const form=document.getElementById('tlform');
 form.addEventListener('submit',e=>{
@@ -33,17 +33,22 @@ form.addEventListener('submit',e=>{
      },2000);
   });
 });
-fetch('/videos')
- .then(r => r.json())
- .then(files => {
-   const ul = document.getElementById('list');
-   files.forEach(f => {
-     const a = document.createElement('a');
-     a.href = '/videos/' + f;
-     a.textContent = f;
-     const li = document.createElement('li');
-     li.appendChild(a);
-     ul.appendChild(li);
+fetch('/videos?limit=10')
+ .then(r=>r.json())
+ .then(files=>{
+   const tbody=document.getElementById('list');
+   files.forEach(item=>{
+     const tr=document.createElement('tr');
+     const td1=document.createElement('td');
+     td1.textContent=new Date(item.created).toLocaleString();
+     const td2=document.createElement('td');
+     const a=document.createElement('a');
+     a.href='/videos/'+item.name;
+     a.textContent=item.name;
+     td2.appendChild(a);
+     tr.appendChild(td1);
+     tr.appendChild(td2);
+     tbody.appendChild(tr);
    });
  });
 </script>

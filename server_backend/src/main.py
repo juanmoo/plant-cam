@@ -37,8 +37,10 @@ async def on_startup():
     app.mount("/videos", StaticFiles(directory=str(VIDEOS_DIR)), name="videos")
 
 @app.get("/videos")
-async def list_videos():
-    return [p.name for p in VIDEOS_DIR.glob("*.mp4")]
+async def list_videos(limit: int = 10):
+    """Return newest videos, pass ?limit=N to adjust."""
+    vids = sorted(VIDEOS_DIR.glob("*.mp4"), key=lambda p: p.stat().st_mtime, reverse=True)[:limit]
+    return [{"name": p.name, "created": datetime.fromtimestamp(p.stat().st_mtime, timezone.utc).isoformat()} for p in vids]
 
 @app.post("/api/upload")
 async def upload(
