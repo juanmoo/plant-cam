@@ -2,6 +2,8 @@ import os
 from pydantic_settings import BaseSettings
 from pydantic import Field
 
+from pydantic_settings import SettingsConfigDict
+
 class Settings(BaseSettings):
     postgres_user: str = Field(..., env="POSTGRES_USER")
     postgres_password: str = Field(..., env="POSTGRES_PASSWORD")
@@ -15,5 +17,7 @@ class Settings(BaseSettings):
             f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
         )
+
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
 settings = Settings()
