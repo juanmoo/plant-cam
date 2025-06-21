@@ -5,10 +5,8 @@ services:
     image: postgres:16
     restart: unless-stopped
     container_name: plantcam-postgres
-    environment:
-      POSTGRES_USER: plantcam
-      POSTGRES_PASSWORD: plantcam_pw
-      POSTGRES_DB: plantcam_db
+    env_file:
+      - .env
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
