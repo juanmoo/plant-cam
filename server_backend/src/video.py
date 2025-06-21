@@ -1,6 +1,6 @@
 import os, subprocess, shlex, tempfile
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import List
 from sqlalchemy import select
 from db import async_session, Image, Video
@@ -19,8 +19,8 @@ async def _frame_paths(start: datetime, end: datetime) -> List[Path]:
     return [Path(p) for p in rows]
 
 async def build_timelapse(start: datetime, end: datetime, fps: int = 24, duration: int | None = None) -> Path:
-    start_utc = start.astimezone(datetime.timezone.utc)
-    end_utc = end.astimezone(datetime.timezone.utc)
+    start_utc = start.replace(tzinfo=timezone.utc)
+    end_utc = end.replace(tzinfo=timezone.utc)
     frames = await _frame_paths(start_utc, end_utc)
     if not frames:
         raise ValueError("No frames in range")

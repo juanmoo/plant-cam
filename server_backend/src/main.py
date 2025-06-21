@@ -1,7 +1,7 @@
 import os
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from typing import List
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from sqlalchemy import select
 from db import async_session, Image, Base, engine
@@ -28,7 +28,7 @@ async def upload(
     files: List[UploadFile] = File(...),
 ):
     try:
-        taken_dt = datetime.fromisoformat(taken_at).astimezone(datetime.timezone.utc)
+        taken_dt = datetime.fromisoformat(taken_at).replace(tzinfo=timezone.utc)
     except ValueError:
         raise HTTPException(status_code=400, detail="invalid taken_at format")
 
