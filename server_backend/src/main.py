@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from typing import List
 from datetime import datetime
 from pathlib import Path
@@ -22,7 +22,11 @@ async def on_startup():
     STORAGE_ROOT.mkdir(parents=True, exist_ok=True)
 
 @app.post("/api/upload")
-async def upload(device_id: str, taken_at: str, files: List[UploadFile] = File(...)):
+async def upload(
+    device_id: str = Form(...),
+    taken_at: str = Form(...),
+    files: List[UploadFile] = File(...),
+):
     try:
         taken_dt = datetime.fromisoformat(taken_at)
     except ValueError:
