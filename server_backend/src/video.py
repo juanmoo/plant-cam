@@ -42,7 +42,8 @@ async def _build_async(start: datetime, end: datetime, fps: int = 24, duration: 
     else:
         frames=[p for p,_ in rows]
 
-    name = f"tl_{start.strftime('%Y%m%d%H%M%S')}_{end.strftime('%Y%m%d%H%M%S')}_{fps}.mp4"
+    dur_tag = f"_{duration}s" if duration else ""
+    name = f"tl_{start.strftime('%Y%m%d%H%M%S')}_{end.strftime('%Y%m%d%H%M%S')}_{fps}{dur_tag}.mp4"
     out_path = VIDEOS_DIR / name
 
     with tempfile.NamedTemporaryFile("w", delete=False) as f:
