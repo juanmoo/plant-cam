@@ -9,7 +9,7 @@ class Settings(BaseSettings):
     postgres_password: str = Field(..., env="POSTGRES_PASSWORD")
     postgres_db: str = Field(..., env="POSTGRES_DB")
     postgres_host: str = Field("postgres", env="POSTGRES_HOST")
-    postgres_port: int = Field(5432, env="POSTGRES_PORT")
+    postgres_port: int = Field(5435, env="POSTGRES_PORT")
 
     @property
     def database_url(self) -> str:

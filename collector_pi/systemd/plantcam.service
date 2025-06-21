@@ -4,9 +4,9 @@ After=network.target
 
 [Service]
 Type=simple
-User=pi
-WorkingDirectory=/home/pi/plant-cam/collector_pi
-ExecStart=/usr/bin/python3 /home/pi/plant-cam/collector_pi/src/capture_upload.py
+User=juan
+WorkingDirectory=/home/juan/Projects/plant-cam/collector_pi/
+ExecStart=/home/juan/Projects/plant-cam/collector_pi/.venv/bin/python /home/juan/Projects/plant-cam/collector_pi/src/capture_upload.py
 Restart=on-failure
 
 [Install]
