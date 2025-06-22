@@ -29,7 +29,7 @@ Systemd unit template lives in `collector_pi/systemd/`.
 
 ### Timelapse generation (manual CLI)
 ```
-./scripts/timelapse.py                 # defaults to last 1 h → 5 s @24 fps
+./scripts/timelapse.py                 # defaults to last 1 h  5 s @24 fps
 ./scripts/timelapse.py --start ISO --end ISO --fps 30 --duration 10
 ```
 Output videos stored under `$STORAGE_ROOT/videos/` and automatically exposed at `http://<server>:8000/videos/<file>.mp4`.
@@ -55,8 +55,11 @@ scripts/timelapse.py  project-root helper CLI
 ```
 
 Key runtime directories are derived from `STORAGE_ROOT` env (default `/data/plantcam`):
-* raw images → `$STORAGE_ROOT/raw/YYYY/MM/DD/`  
-* generated videos → `$STORAGE_ROOT/videos/`
+* raw images  `$STORAGE_ROOT/raw/YYYY/MM/DD/`  
+* generated videos  `$STORAGE_ROOT/videos/`
 
 ## Testing hints
 No automated tests yet.  Add pytest under `server_backend/tests/` and target async FastAPI routes.
+
+## Development Guidance
+- When a task if finished or a broad task is asked where multiple steps are required, suggest the next step to implement to keep development focused.
