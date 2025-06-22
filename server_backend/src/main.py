@@ -59,9 +59,10 @@ async def upload(
             subdir = STORAGE_ROOT / taken_dt.strftime("%Y/%m/%d")
             subdir.mkdir(parents=True, exist_ok=True)
             dest = subdir / f.filename
+            rel_path = dest.relative_to(ROOT_DIR)
             with open(dest, "wb") as out:
                 out.write(await f.read())
-            img = Image(device_id=device_id, path=str(dest), taken_at=taken_dt)
+            img = Image(device_id=device_id, path=str(rel_path), taken_at=taken_dt)
             session.add(img)
             stored_paths.append(str(dest))
         await session.commit()
