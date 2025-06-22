@@ -1,34 +1,37 @@
-# frontend d Web UI
+# frontend – Next.js React UI
 
 ## Purpose
-Provide a simple interface to request and download timelapse videos.
+Provide a richer interface for browsing captures and building timelapse videos.
 
 ## Tech Stack
-- Plain HTML/CSS + Vanilla JS (no framework) OR lightweight Svelte.
-- Axios/fetch to FastAPI backend.
+- **Next.js 14** (React, App Router, TypeScript)
+- Tailwind CSS for styling
+- SWR/fetch helpers for FastAPI calls
+- D3.js for histogram/violin plot
 
-## Pages
-1. **Dashboard (/)**
-   - Date/time range pickers.
-   - FPS (select: 15, 24, 30).
-   - Target video length slider (50 s).
-   - **Generate** button.
-   - Shows progress bar polling `/api/timelapse/{job}`.
-   - Video preview element with download link when ready.
+## Main Page (/)
+- **Capture histogram** – violin-style bars (30-min bins); hover shows bin window, count, thumbnail gif.
+- **Latest image** card (auto-refresh every 60 s).
+- **Date picker** (react-day-picker) limited to first/last capture dates.
+- **Time slider** (24-h range) limited to chosen date.
+- **Time-zone selector** (UTC / Local) affecting all displays.
+- **Timelapse builder**
+  - FPS slider (5-60, default 24)
+  - Duration input seconds (default 10)
+  - Generate button → calls `/api/timelapse`; shows progress bar, embedded player + download link when ready.
 
 ## Components
-- `api.js` – wrapper for fetch.
-- `timeline.js` – computes duration & displays ETA.
-- `index.html` – single-page app.
+- `<Histogram />`
+- `<LatestImage />`
+- `<DateTimeSelector />`
+- `<TimeZoneSelect />`
+- `<TimelapseForm />`
+- `lib/api.ts` – typed fetch helpers (SWR).
 
 ## Interaction
-- `POST /api/timelapse` with JSON.
-- Poll every 2 s until video ready.
-- Handle errors (e.g., 422 range invalid) with toast overlay.
+- `POST /api/timelapse` JSON `{start,end,fps,duration}`
+- Poll `/api/timelapse/{job}` every 2 s.
+- Use `/videos/{file}` for playback.
 
 ## Deployment
-- Static files served by FastAPI `StaticFiles` from `/frontend/dist`.
-
-## Testing
-- Cypress e2e: generate 10 s video over last day.
-- Lighthouse performance budget (<100 KB JS).
+- `next build && next export` → static files copied to `server_backend/static` or served by separate container.
