@@ -4,7 +4,7 @@
 Provide a richer interface for browsing captures and building timelapse videos.
 
 ## Tech Stack
-- **Next.js 14** (React, App Router, TypeScript)
+- **Next.js 15** (React, App Router, TypeScript)
 - Tailwind CSS for styling
 - SWR/fetch helpers for FastAPI calls
 - D3.js for histogram/violin plot
