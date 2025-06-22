@@ -19,16 +19,16 @@ Timezone: <select id="tz"><option value="utc">UTC</option><option value="local">
 const form=document.getElementById('tlform');
 form.addEventListener('submit',e=>{
   e.preventDefault();
-  let s=start.value,e=end.value;
+  let s=start.value,en=end.value;
   const tz=document.getElementById('tz').value;
   if(tz==='local'){
     s=new Date(start.value).toISOString();
-    e=new Date(end.value).toISOString();
+    en=new Date(end.value).toISOString();
   }else{
     s=start.value+':00Z';
-    e=end.value+':00Z';
+    en=end.value+':00Z';
   }
-  const qs=`start=${encodeURIComponent(s)}&end=${encodeURIComponent(e)}&fps=${fps.value}&duration=${dur.value}`;
+  const qs=`start=${encodeURIComponent(s)}&end=${encodeURIComponent(en)}&fps=${fps.value}&duration=${dur.value}`;
   fetch('/api/timelapse?'+qs,{method:'POST'})
   .then(r=>r.json()).then(d=>{
      const id=d.job_id;
