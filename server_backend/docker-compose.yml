@@ -4,7 +4,7 @@ services:
   redis:
     image: redis:7-alpine
     restart: unless-stopped
-    container_name: plantcam-redis
+    # container_name: plantcam-redis
     ports:
       - "6379:6379"
 
@@ -51,7 +51,7 @@ services:
   postgres:
     image: postgres:16
     restart: unless-stopped
-    container_name: plantcam-postgres
+    # container_name: plantcam-postgres
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
