@@ -17,12 +17,12 @@
 
 ## Phase 3 – Production Hardening
 - [ ] Systemd service + log rotation on Pi
-- [ ] Video caching & expiry policy
-- [ ] Disk space guard on server
 - [ ] Dockerize backend (API + Celery)
 
 ## Phase 4 – Nice-to-Have Enhancements
 - [ ] Bulk image download zip
 - [ ] Adjustable capture schedule via web
+- [ ] Video caching & expiry policy
+- [ ] Disk space guard on server
 - [ ] Multi-Pi support dashboard
 - [ ] Auth layer if needed
