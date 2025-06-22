@@ -15,6 +15,9 @@ DEVICE_ID = cfg["id"]
 ENDPOINT = cfg["upload"]["http_endpoint"]
 
 
+def log(msg):
+    print(datetime.now().isoformat(), msg, flush=True)
+
 def capture_image():
     ts = datetime.utcnow()
     rel = ts.strftime("%Y%m%d_%H%M%S") + f"_{DEVICE_ID}.jpg"
@@ -28,12 +31,14 @@ def capture_image():
         "-frames","1",
         str(out_path)
     ], check=True, stdout=open(os.devnull,'w'), stderr=open(os.devnull,'w'))
+    log(f"Captured image {out_path}")
     return out_path, ts
 
 
 def upload_batch():
     files = sorted(BUFFER.glob("*.jpg"))[: cfg["upload"]["batch_size"]]
     if not files:
+        log("No files to upload")
         return
     parts = files[0].stem.split("_")
     taken_str = "_".join(parts[:2])  # YYYYMMDD_HHMMSS
@@ -43,10 +48,12 @@ def upload_batch():
     try:
         r = requests.post(ENDPOINT, files=multipart, data=data, timeout=30)
         r.raise_for_status()
+        log(f"Uploaded {len(files)} files: {[str(f) for f in files]}")
         for fp in files:
             fp.unlink()
+        log(f"Deleted {len(files)} files after upload")
     except Exception as e:
-        print("upload failed", e)
+        log(f"upload failed: {e}")
 
 
 while True:
