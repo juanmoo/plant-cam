@@ -62,4 +62,5 @@ Key runtime directories are derived from `STORAGE_ROOT` env (default `/data/plan
 No automated tests yet.  Add pytest under `server_backend/tests/` and target async FastAPI routes.
 
 ## Development Guidance
+- Claude should apply file changes directly rather than asking the user to edit files manually.
 - When a task if finished or a broad task is asked where multiple steps are required, suggest the next step to implement to keep development focused.
