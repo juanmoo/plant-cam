@@ -5,4 +5,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ ./
 COPY static/ ./static
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app/src
 CMD ["celery","-A","tasks.celery_app","worker","--loglevel=info"]
