@@ -22,6 +22,7 @@ async def _build_async(start: datetime, end: datetime, fps: int = 24, duration: 
     start_utc = start.replace(tzinfo=timezone.utc)
     end_utc = end.replace(tzinfo=timezone.utc)
     rows = await _frames(start_utc, end_utc)
+    rows = [(ROOT_DIR / "raw" / Path(p), ts) for p, ts in rows]
     if not rows:
         raise ValueError("No frames in range")
 
@@ -40,7 +41,7 @@ async def _build_async(start: datetime, end: datetime, fps: int = 24, duration: 
                 i -= 1  # cap to last index
             frames.append(rows[i][0])
     else:
-        frames=[p for p,_ in rows]
+        frames=[ROOT_DIR / p for p,_ in rows]
 
     dur_tag = f"_{duration}s" if duration else ""
     name = f"tl_{start.strftime('%Y%m%d%H%M%S')}_{end.strftime('%Y%m%d%H%M%S')}_{fps}{dur_tag}.mp4"
