@@ -7,6 +7,7 @@
   Start: <input type="datetime-local" id="start" required><br>
   End: <input type="datetime-local" id="end" required><br>
   FPS: <input type="number" id="fps" value="24" min="1"><br>
+Timezone: <select id="tz"><option value="utc">UTC</option><option value="local">Local</option></select><br>
   Duration (s): <input type="number" id="dur" value="5" min="1"><br>
   <button type="submit">Generate</button>
 </form>
@@ -18,7 +19,16 @@
 const form=document.getElementById('tlform');
 form.addEventListener('submit',e=>{
   e.preventDefault();
-  const qs=`start=${start.value}&end=${end.value}&fps=${fps.value}&duration=${dur.value}`;
+  let s=start.value,e=end.value;
+  const tz=document.getElementById('tz').value;
+  if(tz==='local'){
+    s=new Date(start.value).toISOString();
+    e=new Date(end.value).toISOString();
+  }else{
+    s=start.value+':00Z';
+    e=end.value+':00Z';
+  }
+  const qs=`start=${encodeURIComponent(s)}&end=${encodeURIComponent(e)}&fps=${fps.value}&duration=${dur.value}`;
   fetch('/api/timelapse?'+qs,{method:'POST'})
   .then(r=>r.json()).then(d=>{
      const id=d.job_id;
