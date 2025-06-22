@@ -18,8 +18,11 @@ services:
       POSTGRES_HOST: postgres
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/1
+      STORAGE_ROOT: /data/plantcam
     ports:
       - "8000:8000"
+    volumes:
+      - ${STORAGE_ROOT:-./data}:/data/plantcam
     depends_on:
       - postgres
       - redis
@@ -34,6 +37,9 @@ services:
       POSTGRES_HOST: postgres
       CELERY_BROKER_URL: redis://redis:6379/0
       CELERY_RESULT_BACKEND: redis://redis:6379/1
+      STORAGE_ROOT: /data/plantcam
+    volumes:
+      - ${STORAGE_ROOT:-./data}:/data/plantcam
     depends_on:
       - postgres
       - redis
