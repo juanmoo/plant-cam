@@ -1,7 +1,7 @@
 # frontend – Next.js React UI
 
 ## Purpose
-Provide a richer interface for browsing captures and building timelapse videos.
+Deliver a modern, mobile-friendly, and accessible interface for browsing captures and building timelapse videos.
 
 ## Tech Stack
 - **Next.js 15** (React, App Router, TypeScript)
@@ -32,6 +32,3 @@ Provide a richer interface for browsing captures and building timelapse videos.
 - `POST /api/timelapse` JSON `{start,end,fps,duration}`
 - Poll `/api/timelapse/{job}` every 2 s.
 - Use `/videos/{file}` for playback.
-
-## Deployment
-- `next build && next export` → static files copied to `server_backend/static` or served by separate container.
