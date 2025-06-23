@@ -20,11 +20,30 @@
 - [x] Dockerize backend (API + Celery)
 
 ## Phase 4 – Next.js React UI
-- [ ] Graphical capture histogram with hover count
-- [ ] Latest image preview panel
-- [ ] Date picker + time slider bound to data range
-- [ ] Time-zone selector affects all timestamps
-- [ ] Timelapse builder with FPS slider (default 24) and duration input (default 10 s)
+### Milestone 1 – Scaffold
+- [ ] Initialise Next.js 15 + TypeScript + Tailwind project
+- [ ] Configure ESLint / Prettier & absolute imports
+
+### Milestone 2 – Core Layout
+- [ ] App shell with header & dark-mode toggle
+- [ ] Fetch capture min/max dates on load
+
+### Milestone 3 – Components
+- [ ] Graphical capture histogram (30-min bins, hover shows count/thumbnail)
+- [ ] Latest image preview (auto-refresh)
+- [ ] Date picker + time slider limited to data range
+- [ ] Time-zone selector (UTC / Local) stored in localStorage
+- [ ] Timelapse builder form: FPS slider (5-60, default 24) & duration seconds (default 10)
+
+### Milestone 4 – Timelapse Workflow
+- [ ] Call `/api/timelapse` and poll status
+- [ ] Progress bar then embedded player & download link
+
+### Milestone 5 – Polish & Deploy
+- [ ] Responsive/mobile layout & a11y
+- [ ] Error toasts
+- [ ] Lighthouse/perf budget <150 KB JS
+- [ ] `next export` assets copied to `server_backend/static`
 
 ## Backlog
 - Bulk image download zip
