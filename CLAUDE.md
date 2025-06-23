@@ -66,3 +66,7 @@ No automated tests yet.  Add pytest under `server_backend/tests/` and target asy
 - When a task if finished or a broad task is asked where multiple steps are required, suggest the next step to implement to keep development focused.
 - When suggesting edits, make a quick description of what the change is simply.  
 - Prefer adding dependencies using package manager CLIs over modifying dependency files when possible.
+
+- Always keep the todo list up to updated. When finishing a task or about to start one, update the todo list.
+
+```
